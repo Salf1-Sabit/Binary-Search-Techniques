@@ -7,6 +7,7 @@ using namespace std;
 #define dbg(args...) 
 #endif
 
+/* This function returns the (left, right) of the intersection point, if there exists any. */
 template<typename T> 
 array<T, 2> intersect (T a, T b, T c, T d) {
   T xOverlap = min(b, d) - max(a, c);
@@ -29,6 +30,8 @@ int main() {
     for (auto& e : t) { 
       scanf("%d", &e);
     }
+    /* This function checks if the time is optimal then, keep storing the intersection points (left, right). */
+    /* At the end returns the intersection point (l, r). */
     auto poss = [&] (int m) { 
       array<long double, 2> prev = {0, 2e8};
       for (int i = 0; i < n; ++i) { 
@@ -44,6 +47,7 @@ int main() {
       }
       return prev;
     };
+    /* Binary searching the minimum time. */
     long double ans = 0.0;
     int lo = 0, hi = (int) 2e8;
     while (lo <= hi) { 
