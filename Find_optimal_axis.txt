@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#ifdef LOCAL 
+#include "template/debug.h"
+#else 
+#define dbg(args...) 
+#endif
+
+template<typename T> 
+array<T, 2> intersect (T a, T b, T c, T d) {
+  T xOverlap = min(b, d) - max(a, c);
+  return ((xOverlap >= (T) 0) ? array<T, 2> {max(a, c), min(b, d)} : array<T, 2> {-1, -1});
+}
+
+int main() { 
+  ios::sync_with_stdio(false);
+  cin.tie(0);
+  int t;
+  scanf("%d", &t);
+  while (t--) {
+    int n;
+    scanf("%d", &n);
+    vector<int> x(n);
+    for (auto& e : x) { 
+      scanf("%d", &e);
+    }
+    vector<int> t(n);
+    for (auto& e : t) { 
+      scanf("%d", &e);
+    }
+    auto poss = [&] (int m) { 
+      array<long double, 2> prev = {0, 2e8};
+      for (int i = 0; i < n; ++i) { 
+        if (t[i] > m) { 
+          return array<long double, 2> {-1, -1};
+        }
+        int has = m - t[i];
+        array<long double, 2> cur = {x[i] - has, x[i] + has};
+        prev = intersect<long double> (prev[0], prev[1], cur[0], cur[1]);
+        if (prev == array<long double, 2> {-1, -1}) { 
+          return prev;
+        }
+      }
+      return prev;
+    };
+    long double ans = 0.0;
+    int lo = 0, hi = (int) 2e8;
+    while (lo <= hi) { 
+      int m = lo + ((hi - lo) >> 1);
+      array<long double, 2> check = poss(m);
+      if (check != array<long double, 2> {-1, -1}) { 
+        ans = (check[0] + check[1]) / 2.0;
+        hi = m - 1;
+      }
+      else { 
+        lo = m + 1;
+      }
+    }
+    printf("%.6LF\n", ans);
+    dbg("Done\n");
+  }
+  return 0;
+}
