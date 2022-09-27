@@ -1,0 +1,4 @@
+1. Summation of an arithmetic progression :
+   Sum = a1 + a2 + a3 + ... + an = .5 * (a1 + an) * (r − l + 1).
+2. Find the difference of the progression : 
+   Difference = (a[r] - a[l]) / (r - l)
